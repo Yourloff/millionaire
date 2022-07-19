@@ -32,8 +32,6 @@ group :development, :test do
 end
 
 group :production do
-  # гем, улучшающий вывод логов на Heroku
-  # https://devcenter.heroku.com/articles/getting-started-with-rails4#heroku-gems
+  gem 'pg', '~> 1.4', '>= 1.4.1'
   gem 'rails_12factor'
-  gem 'pg'
 end
