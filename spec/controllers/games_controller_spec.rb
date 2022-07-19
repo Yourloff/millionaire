@@ -77,6 +77,18 @@ RSpec.describe GamesController, type: :controller do
         expect(response).to redirect_to(game_path(game))
         expect(flash[:notice]).to be
       end
+
+      it 'the user cannot start two games' do
+        expect(game_w_questions.finished?).to be false
+
+        expect { post :create }.to change(Game, :count).by(0)
+
+        game = assigns(:game)
+        expect(game).to be_nil
+
+        expect(response).to redirect_to(game_path(game_w_questions))
+        expect(flash[:alert]).to be
+      end
     end
 
     describe '#show' do
