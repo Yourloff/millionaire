@@ -7,19 +7,21 @@ RSpec.describe GameQuestion, type: :model do
   context 'game status' do
 
     it 'correct .variants' do
-      expect(game_question.variants).to eq({'a' => game_question.question.answer2,
-                                            'b' => game_question.question.answer1,
-                                            'c' => game_question.question.answer4,
-                                            'd' => game_question.question.answer3})
+      expect(game_question.variants).to eq({ 'a' => game_question.question.answer2,
+                                             'b' => game_question.question.answer1,
+                                             'c' => game_question.question.answer4,
+                                             'd' => game_question.question.answer3 })
     end
 
     it 'correct .answer_correct?' do
-      # именно под буквой b в тесте мы спрятали указатель на верный ответ
       expect(game_question.answer_correct?('b')).to be_truthy
     end
   end
 
-  # тест на наличие методов делегатов level и text
+  it 'b .correct_answer_key' do
+    expect(game_question.correct_answer_key).to eq 'b'
+  end
+
   it 'correct .level & .text delegates' do
     expect(game_question.text).to eq(game_question.question.text)
     expect(game_question.level).to eq(game_question.question.level)
