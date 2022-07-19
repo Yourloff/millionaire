@@ -133,15 +133,75 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe '#answer' do
-    it 'answers correct' do
-      # передаем параметр params[:letter]
-      put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
-      game = assigns(:game)
+    context 'user is not authorized' do
+      before { put :create, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key }
 
-      expect(game.finished?).to be_falsey
-      expect(game.current_level).to be > 0
-      expect(response).to redirect_to(game_path(game))
-      expect(flash.empty?).to be_truthy # удачный ответ не заполняет flash
+      it 'should have response status 302' do
+        expect(response.status).to eq(302)
+      end
+
+      it 'should redirect to sign_up path' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'should place flash alert message' do
+        expect(flash[:alert]).to be
+      end
+    end
+
+    context 'user is logged in' do
+      before { sign_in user }
+
+      context 'and should accept correct answer' do
+        before { put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key }
+        let(:seted_game) { assigns(:game) }
+
+        it 'should not change game state to finished' do
+          expect(seted_game.finished?).to be false
+        end
+
+        it 'should increment game current level' do
+          expect(seted_game.current_level).to be > 0
+        end
+
+        it 'sholud redirect to game_path' do
+          expect(response).to redirect_to(game_path(seted_game))
+        end
+
+        it 'should not place any flashes' do
+          expect(flash.empty?).to be true
+        end
+      end
+
+      context 'and should react to incorrect answer' do
+        before do
+          incorrect_answer =
+            %w[a b c d].grep_v(game_w_questions.current_game_question.correct_answer_key).sample
+
+          put :answer, id: game_w_questions.id, letter: incorrect_answer
+        end
+        let(:seted_game) { assigns(:game) }
+
+        it 'should change game state to finished' do
+          expect(seted_game.finished?).to be true
+        end
+
+        it 'should not change game current level' do
+          expect(seted_game.current_level).to be 0
+        end
+
+        it 'should change game staus to :fail' do
+          expect(seted_game.status).to eq :fail
+        end
+
+        it 'sholud redirect to user_path' do
+          expect(response).to redirect_to user_path(user)
+        end
+
+        it 'should place flashes alert message' do
+          expect(flash[:alert]).to be
+        end
+      end
     end
   end
 
