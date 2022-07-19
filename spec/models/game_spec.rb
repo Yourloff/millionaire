@@ -36,7 +36,6 @@ RSpec.describe Game, type: :model do
     end
   end
 
-
   # тесты на основную игровую логику
   context 'game mechanics' do
 
@@ -74,6 +73,21 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.status).to eq :money
       expect(game_w_questions.finished?).to be_truthy
       expect(user.balance).to eq prize
+    end
+  end
+
+  describe '#previous_level' do
+    context 'current level = 0' do
+      it 'should return -1 if the game is new' do
+        game_w_questions.current_level = 0
+        expect(game_w_questions.previous_level).to eq(-1)
+      end
+    end
+  end
+
+  describe '#current_game_question' do
+    it 'return current game question' do
+      expect(game_w_questions.current_game_question).to eq(game_w_questions.game_questions.first)
     end
   end
 
