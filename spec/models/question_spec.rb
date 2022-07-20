@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Question, type: :model do
 
-  context 'validations check' do
+  context 'Validations check' do
 
     subject { Question.new(text: 'some', level: 0, answer1: '1', answer2: '1', answer3: '1', answer4: '1') }
 

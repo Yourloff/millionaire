@@ -2,11 +2,11 @@ require 'rails_helper'
 require 'support/my_spec_helper'
 
 RSpec.describe Game, type: :model do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
-  let(:game_w_questions) { FactoryGirl.create(:game_with_questions, user: user) }
+  let(:game_w_questions) { FactoryBot.create(:game_with_questions, user: user) }
 
-  context 'Game Factory' do
+  context 'Game factory' do
     it 'Game.create_game! new correct game' do
       generate_questions(60)
 
@@ -26,7 +26,7 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  context 'game mechanics' do
+  context 'Game mechanics' do
     it 'answer correct continues game' do
       level = game_w_questions.current_level
       q = game_w_questions.current_game_question
@@ -148,7 +148,7 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  context '.status' do
+  describe '#status' do
     before(:each) do
       game_w_questions.finished_at = Time.now
       expect(game_w_questions.finished?).to be_truthy

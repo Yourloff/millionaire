@@ -1,6 +1,4 @@
-# http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
-
-FactoryGirl.define do
+FactoryBot.define do
   factory :question do
     answer1 { "#{rand(2001)}" }
     answer2 { "#{rand(2001)}" }
