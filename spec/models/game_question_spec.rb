@@ -76,7 +76,7 @@ RSpec.describe GameQuestion, type: :model do
       end
 
       it 'should contain string' do
-        expect(game_question.help_hash[:friend_call]).to be_a String
+        expect(game_question.help_hash[:friend_call]).to include('считает, что это вариант')
       end
     end
   end
