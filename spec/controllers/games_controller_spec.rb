@@ -255,7 +255,7 @@ RSpec.describe GamesController, type: :controller do
         end
       end
 
-      context 'and fifty_fifty' do
+      context 'fifty_fifty' do
         before { put :help, id: game_w_questions.id, help_type: :fifty_fifty }
 
         it 'should not finish the game' do
