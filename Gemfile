@@ -24,10 +24,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
 
-  # Гем, который использует rspec, чтобы смотреть наш сайт
   gem 'capybara'
-
-  # Гем, который позволяет смотреть, что видит capybara
   gem 'launchy'
 end
 
