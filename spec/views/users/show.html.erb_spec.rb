@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'users/show', type: :view do
   context 'view by current user' do
-    before(:each) do
-      current_user = assign(:user, FactoryBot.build_stubbed(:user, name: 'Alexey'))
+    before do
+      current_user = assign(:user, build_stubbed(:user, name: 'Alexey'))
       allow(view).to receive(:current_user).and_return(current_user)
 
       render
@@ -18,7 +18,7 @@ RSpec.describe 'users/show', type: :view do
     end
 
     it 'renders game partial' do
-      assign(:games, [FactoryBot.build_stubbed(:game)])
+      assign(:games, [build_stubbed(:game)])
       stub_template 'users/_game.html.erb' => "User game goes here"
 
       render
@@ -27,8 +27,8 @@ RSpec.describe 'users/show', type: :view do
   end
 
   context 'view by non-current user' do
-    before(:each) do
-      assign(:user, FactoryBot.build_stubbed(:user, name: 'Alexey'))
+    before do
+      assign(:user, build_stubbed(:user, name: 'Alexey'))
 
       render
     end
