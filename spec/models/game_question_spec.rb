@@ -42,11 +42,8 @@ RSpec.describe GameQuestion, type: :model do
 
   describe '#friend_call' do
     context 'and friend call has not been used before' do
-      before do
-        expect(game_question.help_hash).not_to include(:friend_call)
-
-        game_question.add_friend_call
-      end
+      before { game_question.add_friend_call }
+      let!(:variant) { game_question.help_hash[:friend_call] }
 
       it 'add friend call to help_hash' do
         expect(game_question.help_hash).to include(:friend_call)
@@ -54,6 +51,10 @@ RSpec.describe GameQuestion, type: :model do
 
       it 'contain string' do
         expect(game_question.help_hash[:friend_call]).to include('считает, что это вариант')
+      end
+
+      it 'return correct variant' do
+        expect(game_question.help_hash).to include({ friend_call: variant })
       end
     end
   end
