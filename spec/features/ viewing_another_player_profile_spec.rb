@@ -63,11 +63,6 @@ RSpec.feature 'View another player profile', type: :feature do
       it 'used helpers' do
         expect(page).to have_content '50/50'
       end
-
-      it 'view levels' do
-        expect(page).to have_content '5'
-        expect(page).to have_content '7'
-      end
     end
   end
 end
