@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GameQuestion, type: :model do
-  let(:game_question) { FactoryBot.create(:game_question, a: 2, b: 1, c: 4, d: 3) }
+  let(:game_question) { create(:game_question, a: 2, b: 1, c: 4, d: 3) }
 
   describe '#variants' do
     it 'should return correct .variants' do
@@ -43,18 +43,14 @@ RSpec.describe GameQuestion, type: :model do
   describe '#friend_call' do
     context 'and friend call has not been used before' do
       before { game_question.add_friend_call }
-      let!(:variant) { game_question.help_hash[:friend_call] }
 
       it 'add friend call to help_hash' do
         expect(game_question.help_hash).to include(:friend_call)
       end
 
-      it 'contain string' do
+      it 'contain correct answer' do
         expect(game_question.help_hash[:friend_call]).to include('считает, что это вариант')
-      end
-
-      it 'return correct variant' do
-        expect(game_question.help_hash).to include({ friend_call: variant })
+        expect(game_question.help_hash[:friend_call].last.downcase).to be_in(%w(a b c d))
       end
     end
   end
