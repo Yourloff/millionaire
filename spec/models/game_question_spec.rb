@@ -50,7 +50,7 @@ RSpec.describe GameQuestion, type: :model do
 
       it 'contain correct answer' do
         expect(game_question.help_hash[:friend_call]).to include('считает, что это вариант')
-        expect(game_question.help_hash[:friend_call].last.downcase).to be_in(%w(a b c d))
+        expect(game_question.help_hash[:friend_call].last.downcase).to be_in(%w[a b c d])
       end
     end
   end
